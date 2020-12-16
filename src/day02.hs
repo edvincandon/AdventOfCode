@@ -13,6 +13,7 @@ main = do
 --         lenTarget = foldr (\a b -> if a == target then b + 1 else b) 0 (last w)
 
 -- day02 - B
+
 parseLine' :: String -> Bool
 parseLine' xs =
   (pw !! min == target && pw !! max /= target)
