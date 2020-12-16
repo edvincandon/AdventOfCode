@@ -1,0 +1,13 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "AdventOfCode:lib"
+
+    - path: "./app/Main.hs"
+      component: "AdventOfCode:exe:AdventOfCode-exe"
+
+    - path: "./app/Paths_AdventOfCode.hs"
+      component: "AdventOfCode:exe:AdventOfCode-exe"
+
+    - path: "./test"
+      component: "AdventOfCode:test:AdventOfCode-test"
