@@ -1,3 +1,4 @@
+-- TODO : clean-up - learn parsers
 import qualified Data.Bifunctor                as Bifunctor
 import           Data.Set                       ( Set )
 import qualified Data.Set                      as Set
