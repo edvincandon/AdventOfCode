@@ -1,10 +1,17 @@
 {-# LANGUAGE TupleSections #-}
-import           Data.List
+import           Data.List                      ( minimum
+                                                , maximum
+                                                )
 
 main :: IO ()
 main = do
   contents <- map readInt . lines <$> readFile "./data/day09.txt"
-  print $ head $ findInvalidValues 25 contents
+  let invalid = head $ findInvalidValues 25 contents
+  let subset  = findContiguousSet contents invalid 0
+  print invalid
+  print subset
+  print $ minimum subset + maximum subset
+
 
 readInt :: String -> Int
 readInt = read
@@ -28,3 +35,12 @@ findInvalidValues n xs =
     $ reverse
     $ zip xs [(-n) ..]
 
+findContiguousSet :: [Int] -> Int -> Int -> [Int]
+findContiguousSet xs n idx
+  | null xs             = []
+  | idx > length xs - 1 = findContiguousSet (drop 1 xs) n 0
+  | match               = subset
+  | otherwise           = findContiguousSet xs n (idx + 1)
+ where
+  subset = take idx xs
+  match  = sum subset == n
