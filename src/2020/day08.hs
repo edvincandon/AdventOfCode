@@ -46,11 +46,13 @@ getInstruct ins sign num = case ins of
   "acc" -> Acc sign num
   "jmp" -> Jmp sign num
   "nop" -> Nop sign num
+  _     -> error "invalid instruct"
 
 getSign :: String -> Sign
 getSign s = case s of
   "-" -> Minus
   "+" -> Plus
+  _   -> error "invalid sign"
 
 replaceAtIndex :: Int -> a -> [a] -> [a]
 replaceAtIndex n item ls = a ++ (item : b) where (a, _ : b) = splitAt n ls
