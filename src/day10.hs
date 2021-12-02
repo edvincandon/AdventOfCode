@@ -16,3 +16,4 @@ findDeltas xs = zipWith (-) x (0 : x) where x = xs ++ [last xs + 3]
 
 lengthWithPredicate :: (a -> Bool) -> [a] -> Int
 lengthWithPredicate p = length . filter p
+
