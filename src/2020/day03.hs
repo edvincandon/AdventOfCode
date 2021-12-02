@@ -1,5 +1,5 @@
 main = do
-  contents <- readFile "./data/day03.txt"
+  contents <- readFile "./src/2020/data/day03.txt"
   -- print $ traverseSlope contents 3 1
   print . product $ map (uncurry (traverseSlope contents))
                         [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]

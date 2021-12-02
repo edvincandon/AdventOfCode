@@ -20,7 +20,7 @@ type BagDefinition = (String, [(Int, String)])
 
 main :: IO ()
 main = do
-  bags <- parseData <$> readFile "./data/day07.txt"
+  bags <- parseData <$> readFile "./src/2020/data/day07.txt"
   print $ length . findMatchingBags ["shiny gold"] $ bags
   print $ countTotalSubBags "shiny gold" bags
 

@@ -5,7 +5,7 @@ import           Data.List                      ( minimum
 
 main :: IO ()
 main = do
-  contents <- map readInt . lines <$> readFile "./data/day09.txt"
+  contents <- map readInt . lines <$> readFile "./src/2020/data/day09.txt"
   let invalid = head $ findInvalidValues 25 contents
   let subset  = findContiguousSet contents invalid 0
   print invalid

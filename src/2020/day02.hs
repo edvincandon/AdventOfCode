@@ -1,7 +1,7 @@
 import           Data.List.Split                ( splitOn )
 
 main = do
-  contents <- readFile "./data/day02.txt"
+  contents <- readFile "./src/2020/data/day02.txt"
   print . length . filter parseLine' . lines $ contents
 
 -- day02 - A

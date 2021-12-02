@@ -1,7 +1,7 @@
 
 import           Data.List                      ( sort )
 main = do
-  seats <- map parseSeat . lines <$> readFile "./data/day05.txt"
+  seats <- map parseSeat . lines <$> readFile "./src/2020/data/day05.txt"
   print . maximum $ seats
   print . findSeat $ seats
 

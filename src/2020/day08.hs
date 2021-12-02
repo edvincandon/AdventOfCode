@@ -4,7 +4,8 @@ import           Data.Char                      ( isDigit )
 
 main :: IO ()
 main = do
-  instructions <- readP_to_S parseInstructions <$> readFile "./data/day08.txt"
+  instructions <- readP_to_S parseInstructions
+    <$> readFile "./src/2020/data/day08.txt"
   print "PART #1"
   print $ programLoop $ ProgramState 0 0 (fst . head $ instructions) [] False
   print "PART #2"

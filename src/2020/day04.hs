@@ -21,7 +21,7 @@ import           Data.Char                      ( isDigit
 -- cid (Country ID)
 
 main = do
-  contents <- readFile "./data/day04.txt"
+  contents <- readFile "./src/2020/data/day04.txt"
   print $ length . filter (== True) . map (isValid . splitOneOf " \n") $ splitOn
     "\n\n"
     contents

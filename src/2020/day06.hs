@@ -6,7 +6,7 @@ import           Data.List.Split                ( chunksOf
 import           Data.List                      ( intercalate )
 
 main = do
-  contents <- parseGroups <$> readFile "./data/day06.txt"
+  contents <- parseGroups <$> readFile "./src/2020/data/day06.txt"
   print . findUniqueYes $ contents
   print . findCommonYes $ contents
 

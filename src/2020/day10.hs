@@ -2,7 +2,8 @@ import           Data.List                      ( sort )
 
 main :: IO ()
 main = do
-  contents <- sort . map readInt . lines <$> readFile "./data/day10.txt"
+  contents <- sort . map readInt . lines <$> readFile
+    "./src/2020/data/day10.txt"
   let deltas = findDeltas contents
   let d1     = lengthWithPredicate (== 1) deltas
   let d3     = lengthWithPredicate (== 3) deltas

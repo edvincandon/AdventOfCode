@@ -1,5 +1,5 @@
 main = do
-  contents <- readFile "./data/day01.txt"
+  contents <- readFile "./src/2020/data/day01.txt"
   print . findTupleResult . map read . words $ contents
   print . findTripleResult . map read . words $ contents
 

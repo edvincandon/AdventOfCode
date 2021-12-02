@@ -6,5 +6,5 @@
 #
 
 ```bash
-make run day=xx # day number with 0 prefix
+make run year=xxxx day=xx # day number with 0 prefix
 ```
