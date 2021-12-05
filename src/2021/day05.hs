@@ -1,5 +1,6 @@
 import           AOCUtils                       ( readInt
                                                 , parseNums
+                                                , minUniqueTuples
                                                 )
 import           Data.List.Split                ( splitOn )
 import           Data.List                      ( group
@@ -49,13 +50,9 @@ interpolateDiag ((minX, y1), (maxX, y2)) = zip [minX ..]
   maxY = max y1 y2
 
 -- Part 1/2 --
--- really not optimal --
 computeOverlapCount :: Bool -> [Segment] -> Int
-computeOverlapCount diag =
+computeOverlapCount diag xs =
   length
-    . filter ((>= 2) . length)
-    . concatMap (group . sort . map snd)
-    . groupBy (\a b -> fst a == fst b)
-    . sortOn fst
-    . concatMap interpolateSegment
-    . (if diag then id else keepPerps)
+    $ minUniqueTuples 2
+    $ concatMap interpolateSegment
+    $ (if diag then id else keepPerps) xs
