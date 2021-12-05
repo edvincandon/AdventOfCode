@@ -22,12 +22,10 @@ main = do
   let nums   = parseNums $ head rawData
   let boards = toBingoState 5 $ tail rawData
   putStrLn "---Part 1 -------------"
-  let bingo = runState (runGame nums)
-                       GameState { boards = boards, result = Nothing }
+  let bingo = runState (runGame nums) GameState { boards, result = Nothing }
   print $ computeScore $ fst bingo
   putStrLn "---Part 2 -------------"
-  let bingo = runState (runGame2 nums)
-                       GameState { boards = boards, result = Nothing }
+  let bingo = runState (runGame2 nums) GameState { boards, result = Nothing }
   print $ computeScore $ fst bingo
 
 -- Types --
