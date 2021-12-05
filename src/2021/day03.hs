@@ -1,3 +1,6 @@
+import           AOCUtils                       ( readInt
+                                                , bin2num
+                                                )
 main :: IO ()
 main = do
   rawData <- lines <$> readFile "./src/2021/data/day03.txt"
@@ -20,14 +23,6 @@ type Counter = Int
 type BitList = [Int]
 type RatingPredicate = BitSignificancePair -> Counter -> BitList -> Bool
 
-readInt :: String -> Int
-readInt = read
-
-bin2num :: [Int] -> Int
-bin2num list = parse (reverse list) 0
- where
-  parse []       _ = 0
-  parse (x : xs) n = x * (2 ^ n) + parse xs (n + 1)
 
 parseDiagnostic :: [String] -> [BitList]
 parseDiagnostic = map (fmap (readInt . pure))

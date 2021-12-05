@@ -1,3 +1,4 @@
+import           AOCUtils                       ( readInt )
 main :: IO ()
 main = do
   instructions <- lines <$> readFile "./src/2021/data/day02.txt"
@@ -11,11 +12,7 @@ main = do
     ++ "Part 2 = "
     ++ show (pos2, depth2, aim, pos2 * depth2)
 
-readInt :: String -> Int
-readInt = read
-
 -- Part 1 --
-
 getPosition :: [[String]] -> (Int, Int)
 getPosition = foldl (flip parseInstruction) initState where initState = (0, 0)
 

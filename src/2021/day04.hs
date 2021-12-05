@@ -11,7 +11,10 @@ import           Control.Monad.State            ( runState
                                                 , State
                                                 )
 
-
+import           AOCUtils                       ( readInt
+                                                , parseNums
+                                                , groupByN
+                                                )
 
 main :: IO ()
 main = do
@@ -26,7 +29,6 @@ main = do
   let bingo = runState (runGame2 nums)
                        GameState { boards = boards, result = Nothing }
   print $ computeScore $ fst bingo
-
 
 -- Types --
 type Board = M.Map Int ((Int, Int), Bool)
@@ -50,17 +52,6 @@ data GameState = GameState
 
 
 -- Helpers --
-readInt :: String -> Int
-readInt = read
-
-parseNums :: String -> [Int]
-parseNums = fmap readInt . splitOn ","
-
-groupByN :: Int -> [a] -> [[a]]
-groupByN _ [] = []
-groupByN n xs | n > 0     = take n xs : groupByN n (drop n xs)
-              | otherwise = error "invalid group arguments"
-
 createCoords :: (Int, Int) -> [(Int, Int)]
 createCoords (n, m) = zip (take (n * n) $ cycle $ take n [0 ..])
                           (concatMap (replicate m) $ take m [0 ..])
@@ -82,7 +73,6 @@ toBingoState n xs =
       . concatMap (map readInt . filter (not . all isSpace) . splitOn " ")
       )
     $ groupByN n (filter (not . all isSpace) xs)
-
 
 -- Part 1 --
 doBingoTurn :: Int -> BoardState -> BoardState
@@ -122,7 +112,6 @@ runGame (x : xs) = do
   let _bingo  = findBingo _boards
   put $ GameState { boards = _boards, result = _bingo }
   maybe (runGame xs) (return . (\b -> (Just b, x))) _bingo
-
 
 -- Part 2 --
 runGame2 :: [Int] -> State GameState BingoResult

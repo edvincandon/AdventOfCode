@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0a4c1bea4112235e245b4a4d5deaf3c58541d40bd157417556f949c2d102e3b1
+-- hash: f3527accbf193ec512aff096f5cddceecb498f17cf8cab3016111675ac5c8b36
 
 name:           AdventOfCode
 version:        0.1.0.0
@@ -25,6 +25,8 @@ source-repository head
   location: https://github.com/githubuser/AdventOfCode
 
 library
+  exposed-modules:
+      AOCUtils
   other-modules:
       Paths_AdventOfCode
   hs-source-dirs:

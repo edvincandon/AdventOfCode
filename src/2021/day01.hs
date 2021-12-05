@@ -1,3 +1,4 @@
+import           AOCUtils                       ( readInt )
 main :: IO ()
 main = do
   depths <- lines <$> readFile "./src/2021/data/day01.txt"
@@ -5,8 +6,6 @@ main = do
   putStrLn $ "Part 2 = " ++ show
     (countIncreases . computeWindow . map readInt $ depths)
 
-readInt :: String -> Int
-readInt = read
 
 countPos :: [Int] -> Int
 countPos = length . filter (> 0)
