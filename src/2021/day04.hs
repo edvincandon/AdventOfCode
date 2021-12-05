@@ -32,8 +32,8 @@ main = do
 
 -- Types --
 type Board = M.Map Int ((Int, Int), Bool)
-type Bingo = Maybe Board
 type AxisCounter = M.Map Int Int
+type Bingo = Maybe Board
 type BingoResult = (Bingo, Int)
 
 data BoardState = BoardState
@@ -83,9 +83,10 @@ doBingoTurn n state@(BoardState board rows cols _) = BoardState b r c _bingo
   (r, c) = case match of
     Nothing          -> (rows, cols)
     Just ((x, y), _) -> (M.adjust (+ 1) y rows, M.adjust (+ 1) x cols)
-  fullRow = filter (\(_, count) -> count == 5) $ M.toList r
-  fullCol = filter (\(_, count) -> count == 5) $ M.toList c
-  _bingo  = length fullRow == 1 || length fullCol == 1
+  filterWinningBingoAxis = filter (\(_, count) -> count == 5) . M.toList
+  fullRow                = filterWinningBingoAxis r
+  fullCol                = filterWinningBingoAxis c
+  _bingo                 = length fullRow == 1 || length fullCol == 1
 
 
 isBoardBingo :: BoardState -> Bool
