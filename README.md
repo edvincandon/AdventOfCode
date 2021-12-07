@@ -1,9 +1,9 @@
-# AdventOfCode 2020
+# AdventOfCode
 
-> Advent of code entries in haskell
-> https://adventofcode.com/2020
+> Learning haskell with advent of code
+> https://adventofcode.com
 
-#
+### Running tasks
 
 ```bash
 make run year=xxxx day=xx # day number with 0 prefix
