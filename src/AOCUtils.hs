@@ -4,6 +4,7 @@ import           Data.List                      ( sortOn
                                                 , groupBy
                                                 , sort
                                                 , group
+                                                , genericLength
                                                 )
 -- Helpers --
 -- DATA PARSING --
@@ -12,6 +13,22 @@ readInt = read
 
 parseNums :: String -> [Int]
 parseNums = fmap readInt . splitOn ","
+
+-- STATS --
+mean :: (Real a, Fractional b) => [a] -> b
+mean [] = error "mean imposible"
+mean xs = realToFrac (sum xs) / genericLength xs
+
+median :: (Real a, Fractional b) => [a] -> b
+median [] = error "median impossible"
+median xs
+  | length xs == 1 = realToFrac $ head xs
+  | odd split = realToFrac $ (!!) sorted $ (split - 1) `div` 2
+  | otherwise = realToFrac
+  $ mean [(!!) sorted $ split `div` 2 - 1, (!!) sorted $ split `div` 2]
+ where
+  sorted = sort xs
+  split  = genericLength sorted
 
 
 -- LISTS --
