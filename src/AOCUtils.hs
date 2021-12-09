@@ -6,6 +6,7 @@ import           Data.List                      ( sortOn
                                                 , group
                                                 , genericLength
                                                 )
+import           Data.Maybe                     ( fromMaybe )
 -- Helpers --
 -- DATA PARSING --
 readInt :: String -> Int
@@ -32,6 +33,16 @@ median xs
 
 
 -- LISTS --
+toIndexedList :: [a] -> [(a, Int)]
+toIndexedList = flip zip [0 ..]
+
+safeIndex :: [a] -> Int -> Maybe a
+safeIndex xs i | (i > -1) && (length xs > i) = Just (xs !! i)
+               | otherwise                   = Nothing
+
+safeIndex1 :: [a] -> Int -> a -> a
+safeIndex1 xs i d = fromMaybe d (safeIndex xs i)
+
 groupByN :: Int -> [a] -> [[a]]
 groupByN _ [] = []
 groupByN n xs | n > 0     = take n xs : groupByN n (drop n xs)
