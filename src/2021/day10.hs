@@ -1,13 +1,19 @@
 import           Data.List.Split                ( splitOn )
-import           Data.Maybe                     ( fromMaybe )
-import           AOCUtils                       ( groupByN )
-import           Data.List                      ( find )
+import           Data.Maybe                     ( fromMaybe
+                                                , isNothing
+                                                , fromJust
+                                                )
+import           Data.List                      ( find
+                                                , sort
+                                                )
 
 main :: IO ()
 main = do
   code <- lines <$> readFile "./src/2021/data/day10.txt"
   putStrLn "---Part 1 -------------"
   print $ sum $ getSyntaxErrorScore . findFirstIncorrect <$> code
+  putStrLn "---Part 2 -------------"
+  print $ getMiddleScore code
 
 -- Helpers --
 openCase :: [String]
@@ -35,6 +41,9 @@ isCloseCase = flip elem closeCase
 
 isValid :: String -> String -> Bool
 isValid a b = b == fromMaybe "" (closing a)
+
+isIncomplete :: String -> Bool
+isIncomplete = isNothing . findFirstIncorrect
 
 clearValid :: String -> String
 clearValid xs = if length res > 1 then clearValid $ concat res else concat res
@@ -65,3 +74,28 @@ getSyntaxErrorScore xs = case xs of
     )
 
 -- Part 2 --
+completePattern :: String -> String
+completePattern xs =
+  concatMap ((fromJust . closing) . (: [])) (reverse (clearValid xs))
+
+getAutocompleteScore :: String -> Int
+getAutocompleteScore = foldl (\acc curr -> 5 * acc + getCharScore curr) 0
+ where
+  getCharScore :: Char -> Int
+  getCharScore xs = case xs of
+    ')' -> 1
+    ']' -> 2
+    '}' -> 3
+    '>' -> 4
+    _   -> 0
+
+getMiddleScore :: [String] -> Int
+getMiddleScore xs = sortedScores !! idx
+ where
+  sortedScores =
+    sort
+      $   getAutocompleteScore
+      .   completePattern
+      .   clearValid
+      <$> filter isIncomplete xs
+  idx = length sortedScores `div` 2
