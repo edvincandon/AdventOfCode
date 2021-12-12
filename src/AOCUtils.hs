@@ -53,7 +53,6 @@ replaceNth _ _ [] = []
 replaceNth n newVal (x : xs) | n == 0    = newVal : xs
                              | otherwise = x : replaceNth (n - 1) newVal xs
 
-
 -- BINARY -- 
 bin2num :: [Int] -> Int
 bin2num list = parse (reverse list) 0
