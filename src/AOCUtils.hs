@@ -31,7 +31,6 @@ median xs
   sorted = sort xs
   split  = genericLength sorted
 
-
 -- LISTS --
 toIndexedList :: [a] -> [(a, Int)]
 toIndexedList = flip zip [0 ..]
