@@ -4,25 +4,24 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b97b5652220239dce85e82cbb70d7270d0100c479aa296135c7d8b276257292f
+-- hash: 8adee5e08236e1b9f7e7d1efea75ecf58bac288fc4a329c52cef7bacc40697cc
 
 name:           AdventOfCode
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode#readme>
-homepage:       https://github.com/githubuser/AdventOfCode#readme
-bug-reports:    https://github.com/githubuser/AdventOfCode/issues
-author:         Author name here
-maintainer:     example@example.com
+homepage:       https://github.com/edvincandon/AdventOfCode#readme
+bug-reports:    https://github.com/edvincandon/AdventOfCode/issues
+author:         Edvin CANDON
+maintainer:     edvin@lostsolution.io
 copyright:      2020 Author name here
 license:        BSD3
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/AdventOfCode
+  location: https://github.com/edvincandon/AdventOfCode
 
 library
   exposed-modules:
