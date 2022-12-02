@@ -23,7 +23,7 @@ dependencies:
   - base >= 4.7 && < 5
   - split >= 0.2.2 && < 0.3
   - containers >= 0.6.2
-  - heaps >= 0.3.6.1
+  - heaps >= 0.4
   - mtl
 
 library:

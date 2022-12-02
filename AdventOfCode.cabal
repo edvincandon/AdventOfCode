@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 79dd566d929956a2b0f87d652126a718e5bae0322674e0d4e66769a0a0296c36
+-- hash: b97b5652220239dce85e82cbb70d7270d0100c479aa296135c7d8b276257292f
 
 name:           AdventOfCode
 version:        0.1.0.0
@@ -34,7 +34,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers >=0.6.2
-    , heaps >=0.3.6.1
+    , heaps >=0.4
     , mtl
     , split >=0.2.2 && <0.3
   default-language: Haskell2010
