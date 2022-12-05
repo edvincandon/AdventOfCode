@@ -3,6 +3,7 @@ module AOCUtils where
 import           Data.List       (genericLength, group, groupBy, sort, sortOn)
 import           Data.List.Split (splitOn)
 import           Data.Maybe      (fromMaybe)
+import           Data.Stack      (Stack, stackPop, stackPush)
 
 -- Helpers --
 -- DATA PARSING --
@@ -76,3 +77,17 @@ minUniqueTuples minRep =
   filter ((>= minRep) . length) .
   concatMap (groupBy (\a b -> snd a == snd b) . sortOn snd) .
   groupBy (\a b -> fst a == fst b) . sortOn fst
+
+-- STACKS --
+popMultiple :: Int -> Stack a -> Maybe (Stack a, [a])
+popMultiple n stack = pop n (Just (stack, []))
+  where
+    pop :: Int -> Maybe (Stack a, [a]) -> Maybe (Stack a, [a])
+    pop 0 result = result
+    pop _ Nothing = Nothing
+    pop n (Just (s, values)) =
+      pop (n - 1) ((\(s, v) -> (s, values ++ [v])) <$> stackPop s)
+
+pushMultiple :: Stack a -> [a] -> Stack a
+pushMultiple stack [] = stack
+pushMultiple stack xs = pushMultiple (stackPush stack $ last xs) (init xs)
