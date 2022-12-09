@@ -34,6 +34,11 @@ median xs
 toIndexedList :: [a] -> [(a, Int)]
 toIndexedList = flip zip [0 ..]
 
+toIndexedMatrix2 :: [[a]] -> [[(a, (Int, Int))]]
+toIndexedMatrix2 rows =
+  (\(cols, y) -> (\(xs, x) -> (xs, (x, y))) <$> toIndexedList cols) <$>
+  toIndexedList rows
+
 safeIndex :: [a] -> Int -> Maybe a
 safeIndex xs i
   | (i > -1) && (length xs > i) = Just (xs !! i)
@@ -77,6 +82,9 @@ minUniqueTuples minRep =
   filter ((>= minRep) . length) .
   concatMap (groupBy (\a b -> snd a == snd b) . sortOn snd) .
   groupBy (\a b -> fst a == fst b) . sortOn fst
+
+uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
+uncurry4 f (a, b, c, d) = f a b c d
 
 -- STACKS --
 popMultiple :: Int -> Stack a -> Maybe (Stack a, [a])
