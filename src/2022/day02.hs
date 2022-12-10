@@ -1,87 +1,54 @@
-import           Data.List                      ( sortBy )
-import           Data.List.Split                ( chunksOf )
-import           Data.Maybe                     ( fromMaybe
-                                                , catMaybes
-                                                )
-
-readInt :: String -> Char
-readInt = read
-
-type Round = (String, String)
-
+type Round = (Int, Int)
 
 main :: IO ()
 main = do
-  rounds <- map (toRound . words) . lines <$> readFile
-    "./src/2022/data/day02.txt"
+  rounds <-
+    map ((\(xs:tail) -> (leftScore xs, rightScore $ head tail)) . words) . lines <$>
+    readFile "./src/2022/data/day02.txt"
   putStrLn "---Part 1 -------------"
-  print $ roundScore $ catMaybes rounds
+  print $ sum $ score <$> rounds
   putStrLn "---Part 2 -------------"
-  print $ roundScore $ updateChoice <$> catMaybes rounds
+  print $ sum $ score . update <$> rounds
 
+leftScore :: String -> Int
+leftScore xs =
+  case xs of
+    "A" -> 1
+    "B" -> 2
+    "C" -> 3
+    _   -> 0
 
-toRound :: [String] -> Maybe Round
-toRound (xs : ys : _) = Just (xs, ys)
-toRound []            = Nothing
-toRound (_ : _)       = Nothing
-
-
-choiceScore :: Round -> Int
-choiceScore (xs, ys) = choice
- where
-  choice = case ys of
+rightScore :: String -> Int
+rightScore xs =
+  case xs of
     "X" -> 1
     "Y" -> 2
     "Z" -> 3
     _   -> 0
 
-outcomeScore :: Round -> Int
-outcomeScore (xs, "X") = case xs of
-  "A" -> 3
-  "B" -> 0
-  "C" -> 6
-  _   -> 0
-outcomeScore (xs, "Y") = case xs of
-  "A" -> 6
-  "B" -> 3
-  "C" -> 0
-  _   -> 0
-outcomeScore (xs, "Z") = case xs of
-  "A" -> 0
-  "B" -> 6
-  "C" -> 3
-  _   -> 0
-outcomeScore (_, _) = 0
+-- +-------------+----------+----------+----------+
+-- | Δ + 3 % 3   |   R=1    |   P=2    |   S=3    |
+-- +-------------+----------+----------+----------+
+-- | R'=1        | 0 (draw) | 1 (loss) | 2 (win)  |
+-- | P'=2        | 2 (win)  | 0 (draw) | 1 (loss) |
+-- | S'=3        | 1 (loss) | 2 (win)  | 0 (draw) |
+-- +-------------+----------+----------+----------+
+score :: Round -> Int
+score (left, right) = right + outcome
+  where
+    outcome =
+      case (left - right + 3) `mod` 3 of
+        0 -> 3
+        1 -> 0
+        2 -> 6
+        _ -> 0
 
-roundScore :: [Round] -> Int
-roundScore xs = sum $ (\x -> outcomeScore x + choiceScore x) <$> xs
-
-draw :: String -> Maybe String
-draw "A" = Just "X"
-draw "B" = Just "Y"
-draw "C" = Just "Z"
-draw _   = Nothing
-
-win :: String -> Maybe String
-win "A" = Just "Y"
-win "B" = Just "Z"
-win "C" = Just "X"
-win _   = Nothing
-
-loss :: String -> Maybe String
-loss "A" = Just "Z"
-loss "B" = Just "X"
-loss "C" = Just "Y"
-loss _   = Nothing
-
-updateChoice :: Round -> Round
-updateChoice (xs, ys) = (xs, update)
- where
-  update = fromMaybe
-    ys
-    (case ys of
-      "X" -> loss xs
-      "Y" -> draw xs
-      "Z" -> win xs
-      _   -> Nothing
-    )
+-- +--------------------+----------+----------+----------+
+-- | \ (R + L) % 3 + 1  |   L=1    |   L=2    |   L=3    |
+-- +--------------------+----------+----------+----------+
+-- | R = 1 (loss)       | 3 (loss) | 1 (loss) | 2 (loss) |
+-- | R = 2 (draw)       | 1 (draw) | 2 (draw) | 3 (draw) |
+-- | R = 3 (win)        | 2 (win)  | 3 (win)  | 1 (win)  |
+-- +--------------------+----------+----------+----------+
+update :: Round -> Round
+update (left, right) = (left, (left + right) `mod` 3 + 1)
