@@ -10,6 +10,9 @@ import           Data.Stack      (Stack, stackPop, stackPush)
 readInt :: String -> Int
 readInt = read
 
+readIntLast :: String -> Int
+readIntLast = readInt . last . words
+
 parseNums :: String -> [Int]
 parseNums = fmap readInt . splitOn ","
 
