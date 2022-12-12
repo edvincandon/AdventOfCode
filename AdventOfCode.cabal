@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b1a8d175bad0d24bb87c1b4aafc1d222df39a6a1287202f5958793383f36ff34
+-- hash: be4333d591b16b41a48e84bca4cb7a6cbb79270a53bbe99acdd3cfb122235c61
 
 name:           AdventOfCode
 version:        0.1.0.0
@@ -34,7 +34,7 @@ library
       Stack >=0.4
     , base >=4.7 && <5
     , containers >=0.6.2
-    , heaps >=0.4
+    , heap >=1.0.4
     , mtl
     , split >=0.2.2 && <0.3
   default-language: Haskell2010

@@ -2,6 +2,6 @@ resolver: lts-19.33
 packages:
   - .
 extra-deps:
-  - heaps-0.4
+  - heap-1.0.4
   - split-0.2.3.5
   - Stack-0.4.0

@@ -5,12 +5,12 @@
 
 packages:
 - completed:
-    hackage: heaps-0.4@sha256:66b19fcd813b0e4db3e0bac541bd46606c3b13d3d081d9f9666f4be0f5ff14b8,1410
+    hackage: heap-1.0.4@sha256:ad0e192efbff268e85042068c308c69fa6c787c3cd6ab96c34f89e5bfee01cf9,1556
     pantry-tree:
-      sha256: 8397dc92c6eb4581b2f8235c2fe2f49c0e9ece6ce4cef5748e4cccbf0844469e
-      size: 376
+      sha256: 816bc1574f40ee464de82d596c532aec3c0cdb390864a62cb69525eed1c2b285
+      size: 648
   original:
-    hackage: heaps-0.4
+    hackage: heap-1.0.4
 - completed:
     hackage: split-0.2.3.5@sha256:f472fa7019647cacac3267742a6f7ac0a5c816f9890e80e4b826cd937436de87,2646
     pantry-tree:
