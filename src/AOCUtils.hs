@@ -35,7 +35,9 @@ median [] = error "median impossible"
 median xs
   | length xs == 1 = realToFrac $ head xs
   | odd split = realToFrac $ (!!) sorted $ (split - 1) `div` 2
-  | otherwise = realToFrac $ mean [(!!) sorted $ split `div` 2 - 1, (!!) sorted $ split `div` 2]
+  | otherwise =
+    realToFrac $
+    mean [(!!) sorted $ split `div` 2 - 1, (!!) sorted $ split `div` 2]
   where
     sorted = sort xs
     split = genericLength sorted
@@ -45,7 +47,9 @@ toIndexedList :: [a] -> [(a, Int)]
 toIndexedList = flip zip [0 ..]
 
 toIndexedMatrix2 :: [[a]] -> [[(a, (Int, Int))]]
-toIndexedMatrix2 rows = (\(cols, y) -> (\(xs, x) -> (xs, (x, y))) <$> toIndexedList cols) <$> toIndexedList rows
+toIndexedMatrix2 rows =
+  (\(cols, y) -> (\(xs, x) -> (xs, (x, y))) <$> toIndexedList cols) <$>
+  toIndexedList rows
 
 safeIndex :: [a] -> Int -> Maybe a
 safeIndex xs i
@@ -88,7 +92,8 @@ minUniqueTuples :: (Ord a, Ord b) => Int -> [(a, b)] -> [(a, b)]
 minUniqueTuples minRep =
   fmap head <$>
   filter ((>= minRep) . length) .
-  concatMap (groupBy (\a b -> snd a == snd b) . sortOn snd) . groupBy (\a b -> fst a == fst b) . sortOn fst
+  concatMap (groupBy (\a b -> snd a == snd b) . sortOn snd) .
+  groupBy (\a b -> fst a == fst b) . sortOn fst
 
 uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
 uncurry4 f (a, b, c, d) = f a b c d
@@ -100,7 +105,8 @@ popMultiple n stack = pop n (Just (stack, []))
     pop :: Int -> Maybe (Stack a, [a]) -> Maybe (Stack a, [a])
     pop 0 result = result
     pop _ Nothing = Nothing
-    pop n (Just (s, values)) = pop (n - 1) ((\(s, v) -> (s, values ++ [v])) <$> stackPop s)
+    pop n (Just (s, values)) =
+      pop (n - 1) ((\(s, v) -> (s, values ++ [v])) <$> stackPop s)
 
 pushMultiple :: Stack a -> [a] -> Stack a
 pushMultiple stack [] = stack
@@ -171,9 +177,17 @@ djikstra graph start end = dDistAt (process state) end
                         -- 3. fold over these unvisited neighbors
                         -- and update djikstra state accordingly
                    else let visited' = Set.insert node visited
-                            neighbors = fromMaybe [] (Map.lookup node (edges graph))
-                            unvisited = filter (not . flip Set.member visited' . fst) neighbors
-                         in process $ foldl (foldNeighbor node) (Djikstra visited' distances queue') unvisited
+                            neighbors =
+                              fromMaybe [] (Map.lookup node (edges graph))
+                            unvisited =
+                              filter
+                                (not . flip Set.member visited' . fst)
+                                neighbors
+                         in process $
+                            foldl
+                              (foldNeighbor node)
+                              (Djikstra visited' distances queue')
+                              unvisited
           -- fold over every unvisited neighbor for
           -- the current node at the next state (distances not updated yet) :
           -- 1. Compute distance from node to neighbor
