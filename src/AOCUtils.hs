@@ -9,6 +9,7 @@ import           Data.List.Split (splitOn)
 import           Data.Map        (Map)
 import qualified Data.Map        as Map
 
+import           Data.Bits       (xor)
 import           Data.Maybe      (fromMaybe)
 import           Data.Set        (Set)
 import qualified Data.Set        as Set
@@ -111,6 +112,10 @@ popMultiple n stack = pop n (Just (stack, []))
 pushMultiple :: Stack a -> [a] -> Stack a
 pushMultiple stack [] = stack
 pushMultiple stack xs = pushMultiple (stackPush stack $ last xs) (init xs)
+
+-- HASHING --
+hash :: String -> Int
+hash = foldl (\h c -> 33 * h `xor` fromEnum c) 5381
 
 -- DJIKSTRA's Algorithm --
 data Distance a
