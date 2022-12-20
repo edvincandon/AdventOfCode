@@ -83,6 +83,23 @@ bin2num list = parse (reverse list) 0
     parse (x:xs) n = x * (2 ^ n) + parse xs (n + 1)
 
 -- TUPLES --
+newtype Tuple4 a =
+  Tuple4 (a, a, a, a)
+  deriving (Show, Eq)
+
+instance Num a => Semigroup (Tuple4 a) where
+  (<>) :: Tuple4 a -> Tuple4 a -> Tuple4 a
+  (<>) (Tuple4 (a, b, c, d)) (Tuple4 (a', b', c', d')) =
+    Tuple4 (a + a', b + b', c + c', d + d')
+
+instance Ord a => Ord (Tuple4 a) where
+  compare :: Tuple4 a -> Tuple4 a -> Ordering
+  compare (Tuple4 a) (Tuple4 b) = compare a b
+
+instance Functor Tuple4 where
+  fmap :: (a -> b) -> Tuple4 a -> Tuple4 b
+  fmap f (Tuple4 (a, b, c, d)) = Tuple4 (f a, f b, f c, f d)
+
 tupleToList :: (a, a) -> [a]
 tupleToList (a, b) = [a, b]
 
