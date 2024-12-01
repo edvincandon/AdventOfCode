@@ -1,4 +1,5 @@
-{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE InstanceSigs  #-}
+{-# LANGUAGE TupleSections #-}
 
 module AOCUtils where
 
@@ -26,6 +27,7 @@ readIntLast = readInt . last . words
 parseNums :: String -> [Int]
 parseNums = fmap readInt . splitOn ","
 
+
 -- STATS --
 mean :: (Real a, Fractional b) => [a] -> b
 mean [] = error "mean imposible"
@@ -42,6 +44,10 @@ median xs
   where
     sorted = sort xs
     split = genericLength sorted
+
+
+frequencies :: Ord a => [a] -> Map.Map a Int
+frequencies = Map.fromListWith (+) . map (, 1)
 
 -- LISTS --
 toIndexedList :: [a] -> [(a, Int)]
