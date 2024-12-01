@@ -1,2 +1,2 @@
 run :
-	time stack --resolver lts-19.33 runghc ./src/$(year)/day$(day).hs
+	time stack --resolver lts-22.43 runghc --package AdventOfCode ./src/$(year)/day$(day).hs
