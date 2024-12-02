@@ -10,11 +10,11 @@ import           Data.List.Split (splitOn)
 import           Data.Map        (Map)
 import qualified Data.Map        as Map
 
-import           Data.Bits       (xor)
-import           Data.Maybe      (fromMaybe)
-import           Data.Set        (Set)
-import qualified Data.Set        as Set
-import           Data.Stack      (Stack, stackPop, stackPush)
+import           Data.Bits  (xor)
+import           Data.Maybe (fromMaybe)
+import           Data.Set   (Set)
+import qualified Data.Set   as Set
+import           Data.Stack (Stack, stackPop, stackPush)
 
 -- Helpers --
 -- DATA PARSING --
