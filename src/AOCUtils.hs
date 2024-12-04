@@ -10,11 +10,11 @@ import           Data.List.Split (splitOn)
 import           Data.Map        (Map)
 import qualified Data.Map        as Map
 
-import           Data.Bits  (xor)
-import           Data.Maybe (fromMaybe)
-import           Data.Set   (Set)
-import qualified Data.Set   as Set
-import           Data.Stack (Stack, stackPop, stackPush)
+import           Data.Bits       (xor)
+import           Data.Maybe      (fromMaybe)
+import           Data.Set        (Set)
+import qualified Data.Set        as Set
+import           Data.Stack      (Stack, stackPop, stackPush)
 
 -- Helpers --
 -- DATA PARSING --
@@ -27,7 +27,6 @@ readIntLast = readInt . last . words
 parseNums :: String -> [Int]
 parseNums = fmap readInt . splitOn ","
 
-
 -- STATS --
 mean :: (Real a, Fractional b) => [a] -> b
 mean [] = error "mean imposible"
@@ -39,12 +38,11 @@ median xs
   | length xs == 1 = realToFrac $ head xs
   | odd split = realToFrac $ (!!) sorted $ (split - 1) `div` 2
   | otherwise =
-    realToFrac $
-    mean [(!!) sorted $ split `div` 2 - 1, (!!) sorted $ split `div` 2]
+    realToFrac
+      $ mean [(!!) sorted $ split `div` 2 - 1, (!!) sorted $ split `div` 2]
   where
     sorted = sort xs
     split = genericLength sorted
-
 
 frequencies :: Ord a => [a] -> Map.Map a Int
 frequencies = Map.fromListWith (+) . map (, 1)
@@ -55,8 +53,8 @@ toIndexedList = flip zip [0 ..]
 
 toIndexedMatrix2 :: [[a]] -> [[(a, (Int, Int))]]
 toIndexedMatrix2 rows =
-  (\(cols, y) -> (\(xs, x) -> (xs, (x, y))) <$> toIndexedList cols) <$>
-  toIndexedList rows
+  (\(cols, y) -> (\(xs, x) -> (xs, (x, y))) <$> toIndexedList cols)
+    <$> toIndexedList rows
 
 safeIndex :: [a] -> Int -> Maybe a
 safeIndex xs i
@@ -80,6 +78,32 @@ replaceNth n newVal (x:xs)
 
 splitHalf :: [a] -> ([a], [a])
 splitHalf xs = splitAt ((length xs + 1) `div` 2) xs
+
+-- 2D Matrix --
+type Coord = (Int, Int)
+
+type Dir = Coord
+
+allDirs :: [Dir]
+allDirs = [(0, 1), (1, 0), (1, 1), (-1, 1), (0, -1), (-1, 0), (-1, -1), (1, -1)]
+
+translate :: Coord -> Dir -> Coord
+translate (x, y) (dx, dy) = (x + dx, y + dy)
+
+elemAtCoord :: [[a]] -> Coord -> Maybe a
+elemAtCoord grid (x, y) = do
+  row <- safeIndex grid y
+  safeIndex row x
+
+index2D :: [[a]] -> [[(a, Coord)]]
+index2D grid =
+  [zipWith (\x val -> (val, (x, y))) [0 ..] cols | (y, cols) <- zip [0 ..] grid]
+
+coordToIndex :: Int -> Coord -> Int
+coordToIndex width (x, y) = y * width + x
+
+indexToCoord :: Int -> Int -> Coord
+indexToCoord width idx = (idx `mod` width, idx `div` width)
 
 -- BINARY --
 bin2num :: [Int] -> Int
@@ -114,10 +138,13 @@ uniqueTuples = minUniqueTuples 1
 
 minUniqueTuples :: (Ord a, Ord b) => Int -> [(a, b)] -> [(a, b)]
 minUniqueTuples minRep =
-  fmap head <$>
-  filter ((>= minRep) . length) .
-  concatMap (groupBy (\a b -> snd a == snd b) . sortOn snd) .
-  groupBy (\a b -> fst a == fst b) . sortOn fst
+  fmap head
+    <$> (concatMap
+           (filter ((>= minRep) . length)
+              . groupBy (\a b -> snd a == snd b)
+              . sortOn snd)
+           . groupBy (\a b -> fst a == fst b)
+           . sortOn fst)
 
 uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
 uncurry4 f (a, b, c, d) = f a b c d
@@ -155,22 +182,19 @@ instance (Ord a) => Ord (Distance a) where
 
 type Node = (String, Int)
 
-newtype DjikstraGraph =
-  Graph
-    { edges :: Map String [Node]
-    }
-  deriving (Show)
+newtype DjikstraGraph = Graph
+  { edges :: Map String [Node]
+  } deriving (Show)
 
 type DjikstraMinHeap = Heap Heap.FstMinPolicy (Distance Int, String)
 
 type DjikstraDistMap = Map String (Distance Int)
 
-data Djikstra =
-  Djikstra
-    { visited   :: Set String
-    , distances :: DjikstraDistMap
-    , queue     :: DjikstraMinHeap
-    }
+data Djikstra = Djikstra
+  { visited   :: Set String
+  , distances :: DjikstraDistMap
+  , queue     :: DjikstraMinHeap
+  }
 
 -- adder that accounts for Infinity
 -- values when summing distances
@@ -211,11 +235,11 @@ djikstra graph start end = dDistAt (process state) end
                               filter
                                 (not . flip Set.member visited' . fst)
                                 neighbors
-                         in process $
-                            foldl
-                              (foldNeighbor node)
-                              (Djikstra visited' distances queue')
-                              unvisited
+                         in process
+                              $ foldl
+                                  (foldNeighbor node)
+                                  (Djikstra visited' distances queue')
+                                  unvisited
           -- fold over every unvisited neighbor for
           -- the current node at the next state (distances not updated yet) :
           -- 1. Compute distance from node to neighbor
