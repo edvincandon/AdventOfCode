@@ -79,6 +79,9 @@ replaceNth n newVal (x:xs)
 splitHalf :: [a] -> ([a], [a])
 splitHalf xs = splitAt ((length xs + 1) `div` 2) xs
 
+midPoint :: [a] -> a
+midPoint xs = xs !! (length xs `div` 2)
+
 -- 2D Matrix --
 type Coord = (Int, Int)
 
@@ -132,6 +135,10 @@ instance Functor Tuple4 where
 
 tupleToList :: (a, a) -> [a]
 tupleToList (a, b) = [a, b]
+
+toTuple :: [a] -> (a, a)
+toTuple (x:y:_) = (x, y)
+toTuple _       = error "List needs at least 2 elements"
 
 uniqueTuples :: (Ord a, Ord b) => [(a, b)] -> [(a, b)]
 uniqueTuples = minUniqueTuples 1
