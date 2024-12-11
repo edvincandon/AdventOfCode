@@ -103,7 +103,10 @@ index2D grid =
   [zipWith (\x val -> (val, (x, y))) [0 ..] cols | (y, cols) <- zip [0 ..] grid]
 
 coordToIndex :: Int -> Coord -> Int
-coordToIndex width (x, y) = y * width + x
+coordToIndex width (x, y) =
+  if x < 0 || x >= width
+    then -1
+    else y * width + x
 
 indexToCoord :: Int -> Int -> Coord
 indexToCoord width idx = (idx `mod` width, idx `div` width)
