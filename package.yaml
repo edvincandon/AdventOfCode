@@ -24,9 +24,12 @@ dependencies:
   - containers >= 0.6.2
   - heap >= 1.0.4
   - regex-tdfa >= 1.3.2.2
-  - Stack >= 0.4
+  - Stack >= 0.4.0
   - mtl
   - array >= 0.5.6.0
+  - unordered-containers >= 0.2.20
+  - hashtables >= 1.3.1
+  - criterion
 
 library:
   source-dirs: src
