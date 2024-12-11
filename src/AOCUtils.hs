@@ -87,6 +87,12 @@ type Coord = (Int, Int)
 
 type Dir = Coord
 
+(.+) :: Coord -> Coord -> Coord
+(x1, y1) .+ (x2, y2) = (x1 + x2, y1 + y2)
+
+(.-) :: Coord -> Coord -> Coord
+(x1, y1) .- (x2, y2) = (x1 - x2, y1 - y2)
+
 allDirs :: [Dir]
 allDirs = [(0, 1), (1, 0), (1, 1), (-1, 1), (0, -1), (-1, 0), (-1, -1), (1, -1)]
 
